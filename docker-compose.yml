@@ -1,0 +1,77 @@
+version: '2.4'
+
+volumes:
+  npm-cache:
+    driver: local
+
+  yarn-cache:
+    driver: local
+
+services:
+  base:
+    build: .
+    container_name: base
+    volumes:
+      - /code/node_modules
+      - npm-cache:/cache/npm
+      - yarn-cache:/cache/yarn
+
+  base-cockpit:
+    extends: base
+    container_name: cockpit-base
+    working_dir: /code/packages/cockpit
+    volumes:
+      - /code/packages/cockpit/dist
+      - /code/packages/cockpit/node_modules
+      - ./packages/cockpit:/code/packages/cockpit
+
+  base-pilot:
+    extends: base
+    container_name: pilot-base
+    working_dir: /code/packages/pilot
+    volumes:
+      - /code/packages/pilot/node_modules
+      - ./packages/pilot:/code/packages/pilot
+
+  build-cockpit:
+    extends: base-cockpit
+    container_name: cockpit-build
+    command: yarn build
+
+  lint-cockpit:
+    extends: base-cockpit
+    container_name: cockpit-lint
+    command: yarn lint
+
+  test-cockpit:
+    extends: base-cockpit
+    container_name: cockpit-test
+    command: yarn test
+
+  test-pilot:
+    extends: base-pilot
+    container_name: pilot-test
+    command: yarn test
+
+  cockpit:
+    extends: base-cockpit
+    container_name: cockpit
+    command: yarn start
+
+  pilot:
+    extends: base-pilot
+    container_name: pilot
+    volumes:
+      - /code/packages/cockpit/dist
+    ports:
+      - 3000:3000
+    environment:
+      REACT_APP_API_ENVIRONMENT: test
+    command: yarn start
+
+  storybook:
+    extends: base-pilot
+    container_name: storybook
+    ports:
+      - 6006:6006
+    command: yarn storybook
