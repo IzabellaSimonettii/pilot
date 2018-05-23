@@ -75,6 +75,8 @@ const statusReports = [
   },
 ]
 
+console.log(reportStatus.items)
+
 export default class ReportListState extends React.Component {
   constructor(props) {
     super(props)
@@ -168,7 +170,7 @@ export default class ReportListState extends React.Component {
                 <div>
                   <CardContent>
                     Filtros
-                    <p>Status: {reportStatus[statusReports.status].item.label}</p>
+                    <p>Status: {reportStatus.items[0].label}</p>
                   </CardContent>
                   <CardActions>
                     <Popover
