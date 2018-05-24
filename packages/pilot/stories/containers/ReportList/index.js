@@ -21,8 +21,10 @@ import DownloadIcon from 'emblematic-icons/svg/Download32.svg'
 import AddIcon from 'emblematic-icons/svg/Add32.svg'
 import { action } from '@storybook/addon-actions'
 import moment from 'moment'
-import { contains } from 'ramda'
-
+import {
+  contains,
+  path
+} from 'ramda'
 import style from './style.css'
 
 //variável para preencher o Popover
@@ -56,26 +58,6 @@ const options = [
     value: 'hundred',
   },
 ]
-
-// variável para conversar com o reportStatusLegend
-// para trazer o component Legend com seus 
-// parametros preenchidos corretamente
-const statusReports = [
-  {
-    status: 'ready'
-  },
-  {
-    status: 'waiting'
-  },
-  {
-    status: 'processing'
-  },
-  {
-    status: 'canceled'
-  },
-]
-
-// console.log(reportStatus.items)
 
 export default class ReportListState extends React.Component {
   constructor(props) {
@@ -160,12 +142,11 @@ export default class ReportListState extends React.Component {
                 title={report.type}
                 subtitle={`Período: ${moment(report.data.created_at).format('DD/MM/YYYY')} até ${moment(report.data.updated_at).format('DD/MM/YYYY')} | Criado: ${moment(report.created_at).format('DD/MM/YYYY')}`}
                 collapsed={!contains(report.id, this.state.expandedCard)}
-                // usar path do ramda aqui no Legend
-                icon={<Legend color={
-                  reportStatusLegend[report.status].color} 
-                  acronym={reportStatusLegend[report.status].acronym} 
-                  hideLabel>{reportStatusLegend[report.status].text}
-                  </Legend>}
+                icon={<Legend
+                  color={path([report.status, 'color'], reportStatusLegend)}
+                  acronym={path([report.status, 'acronym'], reportStatusLegend)}
+                  hideLabel>{path([report.status, 'text'], reportStatusLegend)}
+                </Legend>}
                 onClick={
                   () => this.handleClick(report.id)
                 }
@@ -174,7 +155,7 @@ export default class ReportListState extends React.Component {
                 <div>
                   <CardContent>
                     Filtros
-                    <p>Status: {reportStatusLegend[report.status].text}</p>
+                    <p>Status: {path([report.status, 'text'], reportStatusLegend)}</p>
                   </CardContent>
                   <CardActions>
                     <Popover
