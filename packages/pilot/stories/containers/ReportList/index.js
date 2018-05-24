@@ -75,7 +75,7 @@ const statusReports = [
   },
 ]
 
-console.log(reportStatus.items)
+// console.log(reportStatus.items)
 
 export default class ReportListState extends React.Component {
   constructor(props) {
@@ -161,7 +161,11 @@ export default class ReportListState extends React.Component {
                 subtitle={`Período: ${moment(report.data.created_at).format('DD/MM/YYYY')} até ${moment(report.data.updated_at).format('DD/MM/YYYY')} | Criado: ${moment(report.created_at).format('DD/MM/YYYY')}`}
                 collapsed={!contains(report.id, this.state.expandedCard)}
                 // usar path do ramda aqui no Legend
-                icon={<Legend color={reportStatusLegend[report.status].color} acronym={reportStatusLegend[report.status].acronym} hideLabel>{reportStatusLegend[report.status].text}</Legend>}
+                icon={<Legend color={
+                  reportStatusLegend[report.status].color} 
+                  acronym={reportStatusLegend[report.status].acronym} 
+                  hideLabel>{reportStatusLegend[report.status].text}
+                  </Legend>}
                 onClick={
                   () => this.handleClick(report.id)
                 }
@@ -170,7 +174,7 @@ export default class ReportListState extends React.Component {
                 <div>
                   <CardContent>
                     Filtros
-                    <p>Status: {reportStatus.items[0].label}</p>
+                    <p>Status: {reportStatusLegend[report.status].text}</p>
                   </CardContent>
                   <CardActions>
                     <Popover
