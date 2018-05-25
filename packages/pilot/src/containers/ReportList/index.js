@@ -13,9 +13,9 @@ import {
   Popover,
   PopoverMenu,
 } from 'former-kit'
-import reports from './reports.js'
-import reportStatus from './reportStatus.js'
-import reportStatusLegend from './reportStatusLegend.js'
+import reports from '../models/reports.js'
+import reportStatus from '../models/reportStatus.js'
+import reportStatusLegend from '../models/reportStatusLegend.js'
 import TrashIcon from 'emblematic-icons/svg/Trash32.svg'
 import DownloadIcon from 'emblematic-icons/svg/Download32.svg'
 import AddIcon from 'emblematic-icons/svg/Add32.svg'
@@ -29,12 +29,16 @@ import style from './style.css'
 //variável para preencher o Popover
 const items = [
   {
-    title: 'Minha Conta',
-    action: () => action('account'),
+    title: 'PDF',
+    action: () => action('downloadPdf'),
   },
   {
-    title: 'Logout',
-    action: () => action('logout'),
+    title: 'Excel',
+    action: () => action('downloadExcel'),
+  },
+  {
+    title: 'csv',
+    action: () => action('downloadCsv'),
   },
 ]
 
@@ -157,13 +161,12 @@ export default class ReportListState extends React.Component {
                     <p>Status: {path([report.status, 'text'], reportStatusLegend)}</p>
                   </CardContent>
                   <CardActions>
-                    <Popover
+                  <Popover
                       placement="bottomEnd"
                       content={
                         <Fragment>
                           <div>
-                            <strong>teste@email.com</strong>
-                            <small>Administrador</small>
+                            <strong>Exportar para:</strong>
                           </div>
                           <PopoverMenu items={items} />
                         </Fragment>

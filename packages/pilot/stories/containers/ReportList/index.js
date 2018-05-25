@@ -30,12 +30,16 @@ import style from './style.css'
 //variável para preencher o Popover
 const items = [
   {
-    title: 'Minha Conta',
-    action: () => action('account'),
+    title: 'PDF',
+    action: () => action('downloadPdf'),
   },
   {
-    title: 'Logout',
-    action: () => action('logout'),
+    title: 'Excel',
+    action: () => action('downloadExcel'),
+  },
+  {
+    title: 'csv',
+    action: () => action('downloadCsv'),
   },
 ]
 
@@ -163,8 +167,7 @@ export default class ReportListState extends React.Component {
                       content={
                         <Fragment>
                           <div>
-                            <strong>teste@email.com</strong>
-                            <small>Administrador</small>
+                            <strong>Exportar para:</strong>
                           </div>
                           <PopoverMenu items={items} />
                         </Fragment>
