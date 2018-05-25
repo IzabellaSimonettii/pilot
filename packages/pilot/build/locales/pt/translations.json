@@ -1,0 +1,50 @@
+{
+  "back_login_action": "Voltar para o login",
+  "cancel": "cancelar",
+  "email": "E-mail",
+  "password": "Senha",
+  "header": {
+    "title": "TRANSAÇÕES",
+    "alerts": "Notificações",
+    "messages": "Mensagens",
+    "exit": "Sair"
+  },
+  "landing": {
+    "logo": "FormerKit",
+    "title": "Bem-vindo ao Pagar.me",
+    "subtitle": "A melhor forma de receber dinheiro online",
+    "body": "Esta é a Dashboard do Pagar.me, o painel de controle da sua operação. Através dela você terá acesso a suas vendas, saldo, extrato, além de poder realizar saques, estornos e outras tarefas cotidianas de sua operação.",
+    "login_call": "use o formulário para entrar em sua conta.",
+    "signup_call": "ainda não tem uma conta?",
+    "signup_action": "registre-se!"
+  },
+  "login": {
+    "token": "Token",
+    "login_action": "Acessar",
+    "password_recovery_action": "Esqueci minha senha"
+  },
+  "password_recovery": {
+    "confirmation": "em instantes você receberá um e-mail com as instruções para a redefinição de sua senha",
+    "confirmation_emphasis": "pronto",
+    "recovery_call": "Digite o e-mail cadastrado para recuperar sua senha",
+    "recovery_action": "enviar"
+  },
+  "sign_up": {
+    "back_signup_action": "Voltar para o cadastro",
+    "company": "Empresa",
+    "confirmation": "você receberá um e-mail com as instruções para a ativação de sua conta",
+    "confirmation_emphasis": "pronto!",
+    "invalid_email_emphasis": "e-mail de cadastro inválido.",
+    "invalid_email_error": "Para mais informações entre em contato com o administrador da sua conta.",
+    "login_action": "faça login",
+    "login_call": "já possui cadastro ?",
+    "name": "Nome completo",
+    "sign_up_action": "Cadastrar",
+    "subtitle": "na dashboard FormerKit",
+    "title": "crie sua conta"
+  },
+  "transactions": {
+    "list": "TRANSAÇÕES",
+    "details": "TRANSAÇÃO"
+  }
+}

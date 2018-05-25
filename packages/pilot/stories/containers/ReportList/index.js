@@ -26,6 +26,7 @@ import {
   path
 } from 'ramda'
 import style from './style.css'
+import ReportList from '../../../src/containers/ReportList'
 
 //variável para preencher o Popover
 const items = [
@@ -112,76 +113,7 @@ export default class ReportListState extends React.Component {
     const error = totalPages < currentPage || currentPage === 0
 
     return (
-      <Card>
-        <CardTitle
-          title="Relatórios - Total de 75"
-          subtitle={
-            <div className={style.cardComponent}>
-              <Button size="default" relevance="low" fill="outline" icon={<AddIcon width={12} height={12} />}>Novo Relatório</Button>
-              <Dropdown
-                name={'dropdown'}
-                options={options}
-                onChange={event => this.setState({ selected: event.target.value })}
-                value={this.state.selected}
-                placeholder={'Itens por página'}
-                error={''}
-              />
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={this.pageChanged}
-                strings={this.props.strings}
-                disabled={disabled}
-              />
-              {error &&
-                <p>Epic fail!</p>
-              }
-            </div>
-          }
-        />
-        {reports.reports.map(report => (
-          <CardContent key={report.id}>
-            <CardSection>
-              <CardSectionDoubleLineTitle
-                title={report.type}
-                subtitle={`Período: ${moment(report.data.created_at).format('DD/MM/YYYY')} até ${moment(report.data.updated_at).format('DD/MM/YYYY')} | Criado: ${moment(report.created_at).format('DD/MM/YYYY')}`}
-                collapsed={!contains(report.id, this.state.expandedCard)}
-                icon={<Legend
-                  color={path([report.status, 'color'], reportStatusLegend)}
-                  acronym={path([report.status, 'acronym'], reportStatusLegend)}
-                  hideLabel>{path([report.status, 'text'], reportStatusLegend)}
-                </Legend>}
-                onClick={
-                  () => this.handleClick(report.id)
-                }
-              />
-              {contains(report.id, this.state.expandedCard) &&
-                <div>
-                  <CardContent>
-                    Filtros
-                    <p>Status: {path([report.status, 'text'], reportStatusLegend)}</p>
-                  </CardContent>
-                  <CardActions>
-                    <Popover
-                      placement="bottomEnd"
-                      content={
-                        <Fragment>
-                          <div>
-                            <strong>Exportar para:</strong>
-                          </div>
-                          <PopoverMenu items={items} />
-                        </Fragment>
-                      }
-                    >
-                      <Button fill='outline' icon={<DownloadIcon width={12} height={12} />}>Exportar</Button>
-                    </Popover>
-                  </CardActions>
-                </div>
-              }
-            </CardSection>
-          </CardContent>
-        ))}
-      </Card>
+      <ReportList />
     )
   }
 }

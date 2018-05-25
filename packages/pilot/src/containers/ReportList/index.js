@@ -13,36 +13,32 @@ import {
   Popover,
   PopoverMenu,
 } from 'former-kit'
-import reports from '../models/reports.js'
-import reportStatus from '../models/reportStatus.js'
-import reportStatusLegend from '../models/reportStatusLegend.js'
-import TrashIcon from 'emblematic-icons/svg/Trash32.svg'
 import DownloadIcon from 'emblematic-icons/svg/Download32.svg'
 import AddIcon from 'emblematic-icons/svg/Add32.svg'
 import moment from 'moment'
 import {
   contains,
-  path
+  path,
 } from 'ramda'
+import reports from '../../models/reports'
+import reportStatusLegend from '../../models/reportStatusLegend'
 import style from './style.css'
 
-//variável para preencher o Popover
 const items = [
   {
     title: 'PDF',
-    action: () => action('downloadPdf'),
+    // action: () => action('downloadPdf'),
   },
   {
     title: 'Excel',
-    action: () => action('downloadExcel'),
+    // action: () => action('downloadExcel'),
   },
   {
     title: 'csv',
-    action: () => action('downloadCsv'),
+    // action: () => action('downloadCsv'),
   },
 ]
 
-// variável para preencher o Dropdown
 const options = [
   {
     name: '5 itens por página',
@@ -63,18 +59,13 @@ const options = [
 ]
 
 export default class ReportListState extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
-
-    //Dropdown
     const { value } = this.props
-
-    //Pagination
     const {
       currentPage,
       totalPages,
     } = props
-
     this.state = {
       expandedCard: [],
       selected: value,
@@ -86,26 +77,25 @@ export default class ReportListState extends React.Component {
     this.pageChanged = this.pageChanged.bind(this)
   }
 
-  handleClick(id) {
+  handleClick (id) {
     if (contains(id, this.state.expandedCard)) {
       this.setState({
-        expandedCard: this.state.expandedCard.filter(cardId => cardId !== id)
+        expandedCard: this.state.expandedCard.filter(cardId => cardId !== id),
       })
     } else {
       this.setState({
-        expandedCard: [...this.state.expandedCard, id]
+        expandedCard: [...this.state.expandedCard, id],
       })
     }
   }
 
-  pageChanged(page) {
+  pageChanged (page) {
     this.setState({
       currentPage: page,
     })
   }
 
-  render() {
-    // const para Paginator
+  render () {
     const { currentPage, totalPages } = this.state
     const { disabled } = this.props
     const error = totalPages < currentPage || currentPage === 0
@@ -116,14 +106,21 @@ export default class ReportListState extends React.Component {
           title="Relatórios - Total de 75"
           subtitle={
             <div className={style.cardComponent}>
-              <Button size="default" relevance="low" fill="outline" icon={<AddIcon width={12} height={12} />}>Novo Relatório</Button>
+              <Button
+                size="default"
+                relevance="low"
+                fill="outline"
+                icon={<AddIcon width={12} height={12} />}
+              >
+                Novo Relatório
+              </Button>
               <Dropdown
-                name={'dropdown'}
+                name="dropdown"
                 options={options}
                 onChange={event => this.setState({ selected: event.target.value })}
                 value={this.state.selected}
-                placeholder={'Itens por página'}
-                error={''}
+                placeholder="Itens por página"
+                error=""
               />
               <Pagination
                 currentPage={currentPage}
@@ -145,11 +142,13 @@ export default class ReportListState extends React.Component {
                 title={report.type}
                 subtitle={`Período: ${moment(report.data.created_at).format('DD/MM/YYYY')} até ${moment(report.data.updated_at).format('DD/MM/YYYY')} | Criado: ${moment(report.created_at).format('DD/MM/YYYY')}`}
                 collapsed={!contains(report.id, this.state.expandedCard)}
-                icon={<Legend
-                  color={path([report.status, 'color'], reportStatusLegend)}
-                  acronym={path([report.status, 'acronym'], reportStatusLegend)}
-                  hideLabel>{path([report.status, 'text'], reportStatusLegend)}
-                </Legend>}
+                icon={
+                  <Legend
+                    color={path([report.status, 'color'], reportStatusLegend)}
+                    acronym={path([report.status, 'acronym'], reportStatusLegend)}
+                    hideLabel
+                  />
+                }
                 onClick={
                   () => this.handleClick(report.id)
                 }
@@ -161,7 +160,7 @@ export default class ReportListState extends React.Component {
                     <p>Status: {path([report.status, 'text'], reportStatusLegend)}</p>
                   </CardContent>
                   <CardActions>
-                  <Popover
+                    <Popover
                       placement="bottomEnd"
                       content={
                         <Fragment>
@@ -172,7 +171,12 @@ export default class ReportListState extends React.Component {
                         </Fragment>
                       }
                     >
-                      <Button fill='outline' icon={<DownloadIcon width={12} height={12} />}>Exportar</Button>
+                      <Button
+                        fill="outline"
+                        icon={<DownloadIcon width={12} height={12} />}
+                      >
+                        Exportar
+                      </Button>
                     </Popover>
                   </CardActions>
                 </div>
