@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 import {
   Button,
   Card,
@@ -27,15 +28,12 @@ import style from './style.css'
 const items = [
   {
     title: 'PDF',
-    // action: () => action('downloadPdf'),
   },
   {
     title: 'Excel',
-    // action: () => action('downloadExcel'),
   },
   {
     title: 'csv',
-    // action: () => action('downloadCsv'),
   },
 ]
 
@@ -58,10 +56,10 @@ const options = [
   },
 ]
 
-export default class ReportListState extends React.Component {
+class ReportList extends Component {
   constructor (props) {
     super(props)
-    const { value } = this.props
+    const { reports } = this.props
     const {
       currentPage,
       totalPages,
@@ -96,7 +94,7 @@ export default class ReportListState extends React.Component {
   }
 
   render () {
-    const { currentPage, totalPages } = this.state
+    const { currentPage, totalPages, reports } = this.state
     const { disabled } = this.props
     const error = totalPages < currentPage || currentPage === 0
 
@@ -188,3 +186,22 @@ export default class ReportListState extends React.Component {
     )
   }
 }
+
+ReportList.propTypes = {
+  reports: PropTypes.arrayOf(PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.shape({
+      company_id: PropTypes.string,
+      created_at: PropTypes.instanceOf(moment),
+      updated_at: PropTypes.instanceOf(moment),
+    })).isRequired,
+    object: PropTypes.string,
+    id: PropTypes.string,
+    status: PropTypes.string,
+    url: PropTypes.string,
+    type: PropTypes.string,
+    created_at: PropTypes.instanceOf(moment),
+    updated_at: PropTypes.instanceOf(moment),
+  })).isRequired,
+}
+
+export default ReportList

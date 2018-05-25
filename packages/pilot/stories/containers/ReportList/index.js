@@ -113,7 +113,9 @@ export default class ReportListState extends React.Component {
     const error = totalPages < currentPage || currentPage === 0
 
     return (
-      <ReportList />
+      <ReportList
+        reports={reports}
+      />
     )
   }
 }
