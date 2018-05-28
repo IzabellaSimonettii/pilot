@@ -32,15 +32,12 @@ import ReportList from '../../../src/containers/ReportList'
 const items = [
   {
     title: 'PDF',
-    action: () => action('downloadPdf'),
   },
   {
     title: 'Excel',
-    action: () => action('downloadExcel'),
   },
   {
     title: 'csv',
-    action: () => action('downloadCsv'),
   },
 ]
 
