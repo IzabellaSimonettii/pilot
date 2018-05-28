@@ -13,7 +13,7 @@ import {
   Popover,
   PopoverMenu,
 } from 'former-kit'
-import reports from './reports.js'
+import reportsModel from './reports.js'
 import reportStatus from './reportStatus.js'
 import reportStatusLegend from './reportStatusLegend.js'
 import TrashIcon from 'emblematic-icons/svg/Trash32.svg'
@@ -111,7 +111,9 @@ export default class ReportListState extends React.Component {
 
     return (
       <ReportList
-        reports={reports}
+        // esse reports é o reports do src/ReportList
+        // reportsModel vem o meu import mockado
+        reports={reportsModel}
       />
     )
   }

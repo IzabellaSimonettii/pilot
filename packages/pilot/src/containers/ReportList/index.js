@@ -21,7 +21,8 @@ import {
   contains,
   path,
 } from 'ramda'
-import reports from '../../models/reports'
+// não preciso do reportsModel pq já o estou importando em stories/ReportList
+// import reportsModel from '../../models/reports'
 import reportStatusLegend from '../../models/reportStatusLegend'
 import style from './style.css'
 
@@ -59,14 +60,15 @@ const options = [
 class ReportList extends Component {
   constructor (props) {
     super(props)
-    const { reports } = this.props
+    // const { reports } = this.props
     const {
       currentPage,
       totalPages,
     } = props
     this.state = {
       expandedCard: [],
-      selected: value,
+      // de onde vem o value
+      selected: 'ten',
       currentPage: currentPage || 1,
       totalPages: totalPages || 10,
     }
@@ -94,8 +96,9 @@ class ReportList extends Component {
   }
 
   render () {
-    const { currentPage, totalPages, reports } = this.state
-    const { disabled } = this.props
+    // tirando o report daqui pois ele já está sendo importado lá em cima
+    const { currentPage, totalPages } = this.state
+    const { reports, disabled } = this.props
     const error = totalPages < currentPage || currentPage === 0
 
     return (
@@ -189,11 +192,14 @@ class ReportList extends Component {
 
 ReportList.propTypes = {
   reports: PropTypes.arrayOf(PropTypes.shape({
-    data: PropTypes.arrayOf(PropTypes.shape({
+    // data não precisa de array OF ou objectOf
+    // ele já vai entender que esse é o formato de recebimento
+    // importante: algum desses itens é isRequired?
+    data: PropTypes.shape({
       company_id: PropTypes.string,
       created_at: PropTypes.instanceOf(moment),
       updated_at: PropTypes.instanceOf(moment),
-    })).isRequired,
+    }).isRequired,
     object: PropTypes.string,
     id: PropTypes.string,
     status: PropTypes.string,
@@ -202,6 +208,18 @@ ReportList.propTypes = {
     created_at: PropTypes.instanceOf(moment),
     updated_at: PropTypes.instanceOf(moment),
   })).isRequired,
+  currentPage: PropTypes.number,
+  totalPages: PropTypes.number,
+  disabled: PropTypes.bool,
+  strings: PropTypes.string,
+}
+
+// definindo valores default para Pagination funcionar por enquanto
+ReportList.defaultProps = {
+  currentPage: 1,
+  totalPages: 10,
+  disabled: false,
+  strings: '',
 }
 
 export default ReportList
