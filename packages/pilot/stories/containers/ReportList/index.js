@@ -111,8 +111,6 @@ export default class ReportListState extends React.Component {
 
     return (
       <ReportList
-        // esse reports é o reports do src/ReportList
-        // reportsModel vem o meu import mockado
         reports={reportsModel}
       />
     )

@@ -21,8 +21,6 @@ import {
   contains,
   path,
 } from 'ramda'
-// não preciso do reportsModel pq já o estou importando em stories/ReportList
-// import reportsModel from '../../models/reports'
 import reportStatusLegend from '../../models/reportStatusLegend'
 import style from './style.css'
 
@@ -60,14 +58,13 @@ const options = [
 class ReportList extends Component {
   constructor (props) {
     super(props)
-    // const { reports } = this.props
     const {
       currentPage,
       totalPages,
     } = props
     this.state = {
       expandedCard: [],
-      // de onde vem o value
+      // de onde vem o value?
       selected: 'ten',
       currentPage: currentPage || 1,
       totalPages: totalPages || 10,
@@ -96,7 +93,6 @@ class ReportList extends Component {
   }
 
   render () {
-    // tirando o report daqui pois ele já está sendo importado lá em cima
     const { currentPage, totalPages } = this.state
     const { reports, disabled } = this.props
     const error = totalPages < currentPage || currentPage === 0
@@ -192,9 +188,6 @@ class ReportList extends Component {
 
 ReportList.propTypes = {
   reports: PropTypes.arrayOf(PropTypes.shape({
-    // data não precisa de array OF ou objectOf
-    // ele já vai entender que esse é o formato de recebimento
-    // importante: algum desses itens é isRequired?
     data: PropTypes.shape({
       company_id: PropTypes.string,
       created_at: PropTypes.instanceOf(moment),
@@ -214,7 +207,6 @@ ReportList.propTypes = {
   strings: PropTypes.string,
 }
 
-// definindo valores default para Pagination funcionar por enquanto
 ReportList.defaultProps = {
   currentPage: 1,
   totalPages: 10,
