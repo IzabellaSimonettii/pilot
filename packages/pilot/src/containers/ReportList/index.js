@@ -49,7 +49,6 @@ class ReportList extends Component {
 
     this.handleClick = this.handleClick.bind(this)
     this.pageChanged = this.pageChanged.bind(this)
-    // this.renderCardTitleButton = this.renderCardTitleButton.bind(this)
     this.renderReportList = this.renderReportList.bind(this)
   }
 
