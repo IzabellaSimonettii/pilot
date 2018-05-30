@@ -1,40 +1,17 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
   Button,
   Card,
-  CardActions,
   CardTitle,
-  CardContent,
-  CardSection,
-  CardSectionDoubleLineTitle,
   Dropdown,
-  Legend,
   Pagination,
-  Popover,
-  PopoverMenu,
 } from 'former-kit'
-import DownloadIcon from 'emblematic-icons/svg/Download32.svg'
 import AddIcon from 'emblematic-icons/svg/Add32.svg'
 import moment from 'moment'
-import {
-  contains,
-  path,
-} from 'ramda'
-import reportStatusLegend from '../../models/reportStatusLegend'
+import { contains } from 'ramda'
 import style from './style.css'
-
-const items = [
-  {
-    title: 'PDF',
-  },
-  {
-    title: 'Excel',
-  },
-  {
-    title: 'csv',
-  },
-]
+import ReportItem from './ReportItem'
 
 const options = [
   {
@@ -72,6 +49,8 @@ class ReportList extends Component {
 
     this.handleClick = this.handleClick.bind(this)
     this.pageChanged = this.pageChanged.bind(this)
+    // this.renderCardTitleButton = this.renderCardTitleButton.bind(this)
+    this.renderReportList = this.renderReportList.bind(this)
   }
 
   handleClick (id) {
@@ -92,24 +71,37 @@ class ReportList extends Component {
     })
   }
 
+  renderReportList () {
+    const {
+      reports,
+    } = this.props
+    return reports.map(report => (
+      <ReportItem
+        report={report}
+        onClick={this.handleClick}
+        cardExpanded={contains(report.id, this.state.expandedCard)}
+      />
+    ))
+  }
+
   render () {
     const { currentPage, totalPages } = this.state
-    const { reports, disabled } = this.props
+    const { disabled } = this.props
     const error = totalPages < currentPage || currentPage === 0
-
     return (
       <Card>
         <CardTitle
           title="Relatórios - Total de 75"
           subtitle={
             <div className={style.cardComponent}>
+              {/* {this.renderCardTitleButton()} */}
               <Button
                 size="default"
                 relevance="low"
                 fill="outline"
                 icon={<AddIcon width={12} height={12} />}
               >
-                Novo Relatório
+              Novo Relatório
               </Button>
               <Dropdown
                 name="dropdown"
@@ -132,55 +124,7 @@ class ReportList extends Component {
             </div>
           }
         />
-        {reports.reports.map(report => (
-          <CardContent key={report.id}>
-            <CardSection>
-              <CardSectionDoubleLineTitle
-                title={report.type}
-                subtitle={`Período: ${moment(report.data.created_at).format('DD/MM/YYYY')} até ${moment(report.data.updated_at).format('DD/MM/YYYY')} | Criado: ${moment(report.created_at).format('DD/MM/YYYY')}`}
-                collapsed={!contains(report.id, this.state.expandedCard)}
-                icon={
-                  <Legend
-                    color={path([report.status, 'color'], reportStatusLegend)}
-                    acronym={path([report.status, 'acronym'], reportStatusLegend)}
-                    hideLabel
-                  />
-                }
-                onClick={
-                  () => this.handleClick(report.id)
-                }
-              />
-              {contains(report.id, this.state.expandedCard) &&
-                <div>
-                  <CardContent>
-                    Filtros
-                    <p>Status: {path([report.status, 'text'], reportStatusLegend)}</p>
-                  </CardContent>
-                  <CardActions>
-                    <Popover
-                      placement="bottomEnd"
-                      content={
-                        <Fragment>
-                          <div>
-                            <strong>Exportar para:</strong>
-                          </div>
-                          <PopoverMenu items={items} />
-                        </Fragment>
-                      }
-                    >
-                      <Button
-                        fill="outline"
-                        icon={<DownloadIcon width={12} height={12} />}
-                      >
-                        Exportar
-                      </Button>
-                    </Popover>
-                  </CardActions>
-                </div>
-              }
-            </CardSection>
-          </CardContent>
-        ))}
+        {this.renderReportList()}
       </Card>
     )
   }
@@ -188,16 +132,15 @@ class ReportList extends Component {
 
 ReportList.propTypes = {
   reports: PropTypes.arrayOf(PropTypes.shape({
+    object: PropTypes.string,
+    id: PropTypes.string,
+    status: PropTypes.string,
+    type: PropTypes.string,
     data: PropTypes.shape({
       company_id: PropTypes.string,
       created_at: PropTypes.instanceOf(moment),
       updated_at: PropTypes.instanceOf(moment),
     }).isRequired,
-    object: PropTypes.string,
-    id: PropTypes.string,
-    status: PropTypes.string,
-    url: PropTypes.string,
-    type: PropTypes.string,
     created_at: PropTypes.instanceOf(moment),
     updated_at: PropTypes.instanceOf(moment),
   })).isRequired,
@@ -205,6 +148,10 @@ ReportList.propTypes = {
   totalPages: PropTypes.number,
   disabled: PropTypes.bool,
   strings: PropTypes.string,
+  // size: PropTypes.string,
+  // relevance: PropTypes.string,
+  // fill: PropTypes.string,
+  // icon: PropTypes.string,
 }
 
 ReportList.defaultProps = {
