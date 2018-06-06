@@ -87,6 +87,8 @@ class ReportList extends Component {
     const { currentPage, totalPages } = this.state
     const { disabled } = this.props
     const error = totalPages < currentPage || currentPage === 0
+
+    console.log(this.state)
     return (
       <Card>
         <CardTitle
@@ -114,7 +116,7 @@ class ReportList extends Component {
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={this.pageChanged}
-                strings={this.props.strings}
+                strings={this.props.strings.of}
                 disabled={disabled}
               />
               {error &&
@@ -146,7 +148,9 @@ ReportList.propTypes = {
   currentPage: PropTypes.number,
   totalPages: PropTypes.number,
   disabled: PropTypes.bool,
-  strings: PropTypes.string,
+  strings: PropTypes.shape({
+    of: PropTypes.string,
+  }),
   // size: PropTypes.string,
   // relevance: PropTypes.string,
   // fill: PropTypes.string,
@@ -157,7 +161,9 @@ ReportList.defaultProps = {
   currentPage: 1,
   totalPages: 10,
   disabled: false,
-  strings: '',
+  strings: {
+    of: '',
+  },
 }
 
 export default ReportList
