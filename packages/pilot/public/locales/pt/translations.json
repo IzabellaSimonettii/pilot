@@ -49,6 +49,12 @@
     "details": "TRANSAÇÃO"
   },
   "pages": {
+    "filter": {
+      "apply": "Filtrar",
+      "reset": "Limpar",
+      "more": "Mais filtros",
+      "filtering_by": "Filtrando por"
+    },
     "manual_review": {
       "approve_action": "Aprovar transação",
       "legal_warning_approves_approve": "aprovação.",
@@ -74,6 +80,16 @@
       "result_suffix_message": "com sucesso",
       "step_title_confirmation": "Confirmação",
       "step_title_result": "Conclusão"
+    },
+    "recipients": {
+      "title": "Recebedores",
+      "count": "Número de recebedores",
+      "total_amount": "Total",
+      "text_search_placeholder": "Filtre por ID do recebedor, ID da conta bancária ou nome da conta",
+      "items_per_page": "{{count}} ítem por página",
+      "items_per_page_plural": "{{count}} ítens por página",
+      "no_results": "Não foram encontrados resultados para essa busca.",
+      "try_again": "Tente novamente com outros filtros"
     }
   },
   "models": {
@@ -84,6 +100,24 @@
         "approved": "aprovada",
         "refused": "reprovada"
       }
+    },
+    "recipient": {
+      "status": "Status",
+      "id": "Id do Recebedor",
+      "bank_account_id": "Id da Conta Bancária",
+      "bank_account_legal_name": "Nome da Conta Bancária",
+      "bank_account_document_number": "Número do Documento (type) bank_account.document_type",
+      "date_created": "Data de Criação",
+      "automatic_anticipation_enabled": "Antecipação automática",
+      "automatic_anticipation_1025_delay": "Antecipação 10/25 (delay)",
+      "automatic_anticipation_days": "Antecipação 15/25 (dias)",
+      "automatic_anticipation_type": "Tipo de antecipação automática:",
+      "anticipatable_volume_percentage": "Volume antecipado",
+      "transfer_enabled": "Transferência habilitada",
+      "transfer_interval": "Intervalo de transferência",
+      "transfer_day": "Dia da transferência",
+      "created_date": "Data da criação",
+      "details": "Detalhes"
     }
   }
 }

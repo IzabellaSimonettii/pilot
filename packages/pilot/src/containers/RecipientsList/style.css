@@ -1,0 +1,25 @@
+.spacer {
+  flex: 1;
+}
+
+.customTitle {
+  white-space: pre;
+
+  & strong {
+    font-weight: bold;
+  }
+}
+
+.verticalDivider {
+  height: 20px;
+  border-left: 1px solid #aaaaaa;
+  width: auto;
+  margin: 0 8px;
+}
+
+.separator {
+  width: 1px;
+  margin: 0 10px;
+  border-left: 1px solid #d1d5d8;
+}
+
