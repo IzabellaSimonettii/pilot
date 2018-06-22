@@ -1,6 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import AnticipationForm from './Anticipation/Form'
 import BoletoForm from './Refund/BoletoForm'
 import BoletoRefundConfirm from './Refund/BoletoConfirmation'
 import BoletoRefundResult from './Refund/BoletoResult'
@@ -39,6 +40,9 @@ import WithdrawResultSuccess from './Withdraw/Result/Success'
 import WithdrawResultError from './Withdraw/Result/Error'
 
 storiesOf('Containers', module)
+  .add('Anticipation Form', () => (
+    <AnticipationForm />
+  ))
   .add('Recipient list', () => (
     <RecipientListState />
   ))
