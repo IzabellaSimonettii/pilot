@@ -22,14 +22,58 @@ const options = [
   },
 ]
 
+function PhysicPerson () {
+  return (
+    <div>
+      <br />
+      <CardTitle
+        title="Recebedor"
+        subtitle="Preencha abaxio as informações sobre o seu recebedor"
+      />
+      <CardContent>
+        <FormInput
+          size={30}
+          maxLength={12}
+          inputStyle="form"
+          type="text"
+          label="Nome"
+        />
+        <FormInput
+          size={30}
+          maxLength={12}
+          inputStyle="form"
+          type="text"
+          label="E-mail(Opcional)"
+        />
+        <FormInput
+          size={30}
+          maxLength={12}
+          inputStyle="form"
+          type="text"
+          label="URL(Opcional)"
+        />
+        <FormInput
+          size={30}
+          maxLength={12}
+          inputStyle="form"
+          type="text"
+          label="Telefone(Opcional)"
+        />
+      </CardContent>
+    </div>
+  )
+}
+
 class RecipientStep extends Component {
   constructor (props) {
     super(props)
     this.state = {
       value: 'physic',
+      checked: props.checked,
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleCheck = this.handleCheck.bind(this)
   }
 
   handleChange (event) {
@@ -38,16 +82,22 @@ class RecipientStep extends Component {
     })
   }
 
+  handleCheck () {
+    this.setState({
+      checked: !this.state.checked,
+    })
+  }
+
   render () {
     const {
       disabled,
       error,
       name,
-      // size,
     } = this.props
 
     const {
       value,
+      checked,
     } = this.state
 
     return (
@@ -69,6 +119,7 @@ class RecipientStep extends Component {
               />
               {/* <p>Teste: {value}</p> */}
               <FormInput
+                size={30}
                 maxLength={12}
                 inputStyle="form"
                 type="text"
@@ -79,9 +130,16 @@ class RecipientStep extends Component {
               <FormCheckbox
                 label="Quero incluir informações sobre a empresa e os sócios"
                 name="info"
+                error={error}
+                disabled={disabled}
+                checked={checked}
+                onChange={this.handleCheck}
               />
             </Fragment>
           </CardContent>
+          <br />
+          {checked && value === 'physic' &&
+            <PhysicPerson />}
           <CardActions>
             <Button fill="outline">Cancelar</Button>
             <Button fill="gradient">Continuar</Button>
@@ -96,14 +154,14 @@ RecipientStep.propTypes = {
   name: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.string,
-  // size: PropTypes.number,
+  checked: PropTypes.bool,
 }
 
 RecipientStep.defaultProps = {
   name: '',
   disabled: false,
   error: '',
-  // size: 30,
+  checked: false,
 }
 
 export default RecipientStep
