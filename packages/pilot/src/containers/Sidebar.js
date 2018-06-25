@@ -2,6 +2,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import SidebarSections from '../components/SidebarSections'
+import SidebarSummary from '../components/SidebarSummary'
+
 import {
   Sidebar,
   SidebarHeader,
@@ -11,11 +14,32 @@ import {
 
 import Menu32 from 'emblematic-icons/svg/Menu32.svg'
 
+const sections = {
+  data: [
+    {
+      action: () => {},
+      actionTitle: 'Sacar',
+      title: 'Disponível',
+      value: <span><small>R$</small> 15.000,00</span>,
+    },
+    {
+      action: () => {},
+      actionTitle: 'Antecipar',
+      title: 'A receber',
+      value: <span><small>R$</small> 70.000,00</span>,
+    },
+  ],
+  hideMsg: 'Ocultar saldo',
+  showMsg: 'Mostrar saldo',
+  title: 'Pagar.me',
+}
+
 class SidebarContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       collapsed: false,
+      showInfos: false,
     }
 
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
@@ -27,7 +51,10 @@ class SidebarContainer extends React.Component {
   }
 
   render () {
-    const { collapsed } = this.state
+    const {
+      collapsed,
+      showInfos,
+    } = this.state
     const {
       links,
       logo: Logo,
@@ -42,6 +69,16 @@ class SidebarContainer extends React.Component {
             <Menu32 width={16} height={16} />
           </button>
         </SidebarHeader>
+        {!collapsed &&
+          <SidebarSummary
+            active={showInfos}
+            onClick={() => this.setState({ showInfos: !showInfos })}
+            subtitle={showInfos ? `${sections.hideMsg}` : `${sections.showMsg}`}
+            title={sections.title}
+          >
+            <SidebarSections sections={sections.data} />
+          </SidebarSummary>
+        }
         <SidebarLinks>
           {links.map(({
             active,
