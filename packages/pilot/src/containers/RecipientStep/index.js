@@ -3,13 +3,16 @@ import PropTypes from 'prop-types'
 import {
   Button,
   Card,
-  CardTitle,
   CardContent,
   CardActions,
-  RadioGroup,
+  Col,
+  Grid,
   FormInput,
   FormCheckbox,
+  RadioGroup,
+  Row,
 } from 'former-kit'
+import styles from './style.css'
 
 const options = [
   {
@@ -25,40 +28,52 @@ const options = [
 function PhysicPerson () {
   return (
     <div>
-      <br />
-      <CardTitle
-        title="Recebedor"
-        subtitle="Preencha abaxio as informações sobre o seu recebedor"
-      />
       <CardContent>
-        <FormInput
-          size={30}
-          maxLength={12}
-          inputStyle="form"
-          type="text"
-          label="Nome"
-        />
-        <FormInput
-          size={30}
-          maxLength={12}
-          inputStyle="form"
-          type="text"
-          label="E-mail(Opcional)"
-        />
-        <FormInput
-          size={30}
-          maxLength={12}
-          inputStyle="form"
-          type="text"
-          label="URL(Opcional)"
-        />
-        <FormInput
-          size={30}
-          maxLength={12}
-          inputStyle="form"
-          type="text"
-          label="Telefone(Opcional)"
-        />
+        <h2>Recebedor</h2>
+        <h3>
+          Prencha abaixo as informações sobre o seu recebedor
+        </h3>
+        <Grid>
+          <Row>
+            <Col>
+              <FormInput
+                size={30}
+                maxLength={12}
+                inputStyle="form"
+                type="text"
+                label="Nome"
+              />
+            </Col>
+          </Row>
+        </Grid>
+        <Grid>
+          <Row>
+            <Col>
+              <FormInput
+                size={30}
+                maxLength={12}
+                inputStyle="form"
+                type="text"
+                label="E-mail(Opcional)"
+              />
+              <FormInput
+                size={30}
+                maxLength={12}
+                inputStyle="form"
+                type="text"
+                label="URL(Opcional)"
+              />
+              <FormInput
+                size={30}
+                maxLength={12}
+                inputStyle="form"
+                type="text"
+                label="Telefone(Opcional)"
+              />
+            </Col>
+          </Row>
+        </Grid>
+
       </CardContent>
     </div>
   )
@@ -103,11 +118,12 @@ class RecipientStep extends Component {
     return (
       <div>
         <Card>
-          <CardTitle
-            title="Identificação"
-            subtitle="Escolha qual tipo de pessoa do seu recebedor e preencha o documento"
-          />
           <CardContent>
+            <h2>Identificação</h2>
+            <h3>
+            Escolha qual tipo de pessoa do seu recebedor e preencha o documento
+            </h3>
+            <span className={styles.spanRadioBtn}>Tipo de recebedor</span>
             <Fragment>
               <RadioGroup
                 options={options}
@@ -117,14 +133,19 @@ class RecipientStep extends Component {
                 disabled={disabled}
                 error={error}
               />
-              {/* <p>Teste: {value}</p> */}
-              <FormInput
-                size={30}
-                maxLength={12}
-                inputStyle="form"
-                type="text"
-                label="CNPJ"
-              />
+              <Grid>
+                <Row>
+                  <Col>
+                    <FormInput
+                      size={30}
+                      maxLength={12}
+                      inputStyle="form"
+                      type="text"
+                      label="CNPJ"
+                    />
+                  </Col>
+                </Row>
+              </Grid>
               <br />
               <br />
               <FormCheckbox
@@ -137,7 +158,6 @@ class RecipientStep extends Component {
               />
             </Fragment>
           </CardContent>
-          <br />
           {checked && value === 'physic' &&
             <PhysicPerson />}
           <CardActions>
