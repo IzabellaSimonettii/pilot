@@ -13,6 +13,7 @@ import moment from 'moment'
 import { path } from 'ramda'
 import DownloadIcon from 'emblematic-icons/svg/Download32.svg'
 import TrashIcon from 'emblematic-icons/svg/Trash32.svg'
+import ReprocessIcon from 'emblematic-icons/svg/Reprocess32.svg'
 import reportStatusLegend from '../../models/reportStatusLegend'
 
 const items = [
@@ -34,6 +35,14 @@ const renderActions = (report) => {
         <Button
           fill="outline"
           icon={<TrashIcon width={16} height={16} />}
+          key="Item 1"
+          onClick={() => null}
+          size="default"
+        />
+
+        <Button
+          fill="outline"
+          icon={<ReprocessIcon width={16} height={16} />}
           key="Item 1"
           onClick={() => null}
           size="default"
