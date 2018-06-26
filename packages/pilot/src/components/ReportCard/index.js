@@ -84,8 +84,8 @@ const renderActions = (report) => {
 }
 
 class ReportCard extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor () {
+    super()
     this.handleClickItem = this.handleClickItem.bind(this)
   }
 
