@@ -21,7 +21,7 @@ class SidebarContainer extends React.Component {
     super(props)
     this.state = {
       collapsed: false,
-      showInfos: false,
+      summaryCollapsed: true,
     }
 
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this)
@@ -35,17 +35,17 @@ class SidebarContainer extends React.Component {
   render () {
     const {
       collapsed,
-      showInfos,
+      summaryCollapsed,
     } = this.state
     const {
       balance,
+      company,
       links,
       logo: Logo,
-      onLinkClick,
-      t,
-      onWithdraw,
       onAnticipate,
-      company,
+      onLinkClick,
+      onWithdraw,
+      t,
     } = this.props
 
     const available = propOr(null, 'available', balance)
@@ -59,12 +59,17 @@ class SidebarContainer extends React.Component {
             <Menu32 width={16} height={16} />
           </button>
         </SidebarHeader>
+
         {!collapsed &&
           <SidebarSummary
-            active={showInfos}
-            onClick={() => this.setState({ showInfos: !showInfos })}
-            subtitle={showInfos ? t('pages.sidebar.hide_balance') : t('pages.sidebar.show_balance')}
-            title={company}
+            collapsed={summaryCollapsed}
+            onClick={() => this.setState({ summaryCollapsed: !summaryCollapsed })}
+            subtitle={
+              summaryCollapsed
+                ? t('pages.sidebar.show_balance')
+                : t('pages.sidebar.hide_balance')
+            }
+            title={company || ''}
           >
             <SidebarSections
               sections={[
@@ -84,6 +89,7 @@ class SidebarContainer extends React.Component {
             />
           </SidebarSummary>
         }
+
         <SidebarLinks>
           {links.map(({
             active,

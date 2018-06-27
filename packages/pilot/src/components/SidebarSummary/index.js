@@ -5,16 +5,15 @@ import classNames from 'classnames'
 import style from './style.css'
 
 const SidebarSummary = ({
-  title,
-  subtitle,
   children,
-  onClick,
-  active,
   collapsed,
+  onClick,
+  subtitle,
+  title,
 }) => (
   <div
     className={classNames(style.summary, {
-      [style.active]: active,
+      [style.active]: !collapsed,
     })}
   >
     <button
@@ -22,7 +21,7 @@ const SidebarSummary = ({
       onClick={onClick}
       role="link"
     >
-      {!collapsed && title}
+      {title}
 
       {subtitle &&
         <span className={style.subtitle}>
@@ -31,12 +30,13 @@ const SidebarSummary = ({
       }
     </button>
 
-    {active && children}
+    {!collapsed
+      && children
+    }
   </div>
 )
 
 SidebarSummary.propTypes = {
-  active: PropTypes.bool,
   children: PropTypes.node,
   collapsed: PropTypes.bool,
   onClick: PropTypes.func,
@@ -45,9 +45,8 @@ SidebarSummary.propTypes = {
 }
 
 SidebarSummary.defaultProps = {
-  active: false,
   children: null,
-  collapsed: false,
+  collapsed: true,
   onClick: null,
   subtitle: '',
 }
