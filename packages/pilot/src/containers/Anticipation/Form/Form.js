@@ -1,28 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { contains } from 'ramda'
 import Form from 'react-vanilla-form'
 import {
   Button,
+  Calendar,
   Card,
   CardContent,
   Col,
-  DateInput,
   FormInput,
   Grid,
   RadioGroup,
   Row,
   SegmentedSwitch,
 } from 'former-kit'
-import Calendar32 from 'emblematic-icons/svg/Calendar32.svg'
 import CurrencyInput from '../../../components/CurrencyInput'
 import formatCurrency from '../../../formatters/currency'
-import translateDateInput from '../../../formatters/dateInputTranslator'
 import style from './style.css'
+
+const isWeekendDay = date =>
+  date && date.weekday && contains(date.weekday(), [0, 6])
 
 const AnticipationForm = ({
   anticipationInfo,
-  date,
+  dates,
   isAutomaticTransfer,
   loading,
   maximum,
@@ -36,7 +38,7 @@ const AnticipationForm = ({
 }) => (
   <Form
     data={{
-      date,
+      dates,
       period,
       requested: requested.toString(),
       transfer: isAutomaticTransfer ? 'automatic' : 'manual',
@@ -78,11 +80,15 @@ const AnticipationForm = ({
                 {t('pages.anticipation.date.label')}
                 {anticipationInfo}
               </div>
-              <DateInput
-                icon={<Calendar32 width={16} height={16} />}
-                name="date"
-                strings={translateDateInput(t)}
-              />
+              <CardContent>
+                <Calendar
+                  dates={dates}
+                  dateSelection="single"
+                  months={1}
+                  name="dates"
+                  isDayBlocked={isWeekendDay}
+                />
+              </CardContent>
             </Col>
           </Row>
 
@@ -158,7 +164,10 @@ const AnticipationForm = ({
 
 AnticipationForm.propTypes = {
   anticipationInfo: PropTypes.element.isRequired,
-  date: PropTypes.instanceOf(moment).isRequired,
+  dates: PropTypes.shape({
+    end: PropTypes.instanceOf(moment),
+    start: PropTypes.instanceOf(moment),
+  }).isRequired,
   isAutomaticTransfer: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   maximum: PropTypes.number.isRequired,
@@ -169,9 +178,9 @@ AnticipationForm.propTypes = {
   requested: PropTypes.number.isRequired,
   t: PropTypes.func.isRequired,
   validation: PropTypes.shape({
-    date: PropTypes.func,
+    dates: PropTypes.func,
     requested: PropTypes.func,
   }).isRequired,
-}
 
+}
 export default AnticipationForm

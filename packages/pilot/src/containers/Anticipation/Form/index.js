@@ -201,7 +201,7 @@ class AnticipationFormContainer extends Component {
             <Card>
               <Form
                 anticipationInfo={renderInfo(t('pages.anticipation.date.advise'))}
-                date={dates}
+                dates={dates}
                 isAutomaticTransfer={isAutomaticTransfer}
                 loading={loading}
                 maximum={maximum}
