@@ -21,12 +21,14 @@ const removeRouteParams = pipe(
 )
 
 const Sidebar = ({
+  company,
   location: { pathname },
   history,
   t,
 }) => (
   <SidebarContainer
     logo={Logo}
+    company={company}
     links={values(routes)
       .filter(({ hidden }) => !hidden)
       .map(route => ({
@@ -40,6 +42,7 @@ const Sidebar = ({
 )
 
 Sidebar.propTypes = {
+  company: PropTypes.string.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,

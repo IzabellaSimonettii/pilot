@@ -40,6 +40,7 @@ class SidebarContainer extends React.Component {
       logo: Logo,
       onLinkClick,
       t,
+      company,
     } = this.props
     return (
       <Sidebar collapsed={collapsed}>
@@ -54,7 +55,7 @@ class SidebarContainer extends React.Component {
             active={showInfos}
             onClick={() => this.setState({ showInfos: !showInfos })}
             subtitle={showInfos ? t('pages.sidebar.hide_balance') : t('pages.sidebar.show_balance')}
-            title="Pagar.me"
+            title={company}
           >
             <SidebarSections
               sections={[
@@ -98,6 +99,7 @@ class SidebarContainer extends React.Component {
 }
 
 SidebarContainer.propTypes = {
+  company: PropTypes.string.isRequired,
   links: PropTypes.arrayOf(PropTypes.shape({
     active: PropTypes.bool,
     title: PropTypes.string,

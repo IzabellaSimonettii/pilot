@@ -6,8 +6,9 @@ import {
   Switch,
   withRouter,
 } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
-import { compose } from 'ramda'
+import { compose, pathOr } from 'ramda'
 import { Layout } from 'former-kit'
 
 import Sidebar from './Sidebar'
@@ -15,14 +16,29 @@ import Header from './Header'
 
 import routes from './routes'
 
+const getCompanyName = pathOr(null, ['account', 'company', 'name'])
+
+const mapStateToProps = state => ({
+  company: getCompanyName(state),
+})
+
 const enhanced = compose(
   translate(),
-  withRouter
+  withRouter,
+  connect(mapStateToProps)
 )
 
-const LoggedArea = ({ t }) => (
+const LoggedArea = ({
+  company,
+  t,
+}) => (
   <Layout
-    sidebar={<Sidebar t={t} />}
+    sidebar={
+      <Sidebar
+        company={company}
+        t={t}
+      />
+    }
     header={<Header t={t} />}
   >
     <Switch>
@@ -39,6 +55,7 @@ const LoggedArea = ({ t }) => (
 )
 
 LoggedArea.propTypes = {
+  company: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 }
 
