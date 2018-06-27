@@ -10,7 +10,6 @@ import {
   PopoverMenu,
 } from 'former-kit'
 import moment from 'moment'
-import { path } from 'ramda'
 import DownloadIcon from 'emblematic-icons/svg/Download32.svg'
 import TrashIcon from 'emblematic-icons/svg/Trash32.svg'
 import ReprocessIcon from 'emblematic-icons/svg/Reprocess32.svg'
@@ -108,13 +107,18 @@ class ReportCard extends React.Component {
         <CardSection>
           <CardSectionDoubleLineTitle
             title={report.type}
-            subtitle={`Período: ${moment(report.data.created_at).format('DD/MM/YYYY')} até ${moment(report.data.updated_at).format('DD/MM/YYYY')} | Criado: ${moment(report.created_at).format('DD/MM/YYYY')}`}
+            subtitle={
+              <div>
+                Período: {moment(report.data.created_at).format('DD/MM/YYYY')} até {moment(report.data.updated_at).format('DD/MM/YYYY')} |
+                Criado: {moment(report.created_at).format('DD/MM/YYYY')}
+              </div>
+            }
             collapsed={!cardExpanded}
             actions={renderActions(report)}
             icon={
               <Legend
-                color={path([report.status, 'color'], reportStatusLegend)}
-                acronym={path([report.status, 'acronym'], reportStatusLegend)}
+                color={reportStatusLegend[report.status].color}
+                acronym={reportStatusLegend[report.status].acronym}
                 hideLabel
               />
             }

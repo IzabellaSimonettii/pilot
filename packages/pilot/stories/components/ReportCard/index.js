@@ -1,5 +1,4 @@
 import React from 'react'
-import { contains } from 'ramda'
 import ReportCard from '../../../src/components/ReportCard'
 
 const report = {
@@ -22,15 +21,15 @@ class ReportCardState extends React.PureComponent {
     super(props)
     this.state = {
       ...report,
-      expandedCard: [],
+      expandedCard: false,
     }
 
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick (id) {
+  handleClick () {
     this.setState({
-      expandedCard: !this.state.expandedCard
+      expandedCard: !this.state.expandedCard,
     })
   }
 
