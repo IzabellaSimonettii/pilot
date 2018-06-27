@@ -14,26 +14,6 @@ import {
 
 import Menu32 from 'emblematic-icons/svg/Menu32.svg'
 
-const sections = {
-  data: [
-    {
-      action: () => {},
-      actionTitle: 'Sacar',
-      title: 'Disponível',
-      value: <span><small>R$</small> 15.000,00</span>,
-    },
-    {
-      action: () => {},
-      actionTitle: 'Antecipar',
-      title: 'A receber',
-      value: <span><small>R$</small> 70.000,00</span>,
-    },
-  ],
-  hideMsg: 'Ocultar saldo',
-  showMsg: 'Mostrar saldo',
-  title: 'Pagar.me',
-}
-
 class SidebarContainer extends React.Component {
   constructor (props) {
     super(props)
@@ -73,10 +53,25 @@ class SidebarContainer extends React.Component {
           <SidebarSummary
             active={showInfos}
             onClick={() => this.setState({ showInfos: !showInfos })}
-            subtitle={showInfos ? `${sections.hideMsg}` : `${sections.showMsg}`}
-            title={sections.title}
+            subtitle={showInfos ? t('pages.sidebar.hide_balance') : t('pages.sidebar.show_balance')}
+            title="Pagar.me"
           >
-            <SidebarSections sections={sections.data} />
+            <SidebarSections
+              sections={[
+                {
+                  action: () => {},
+                  actionTitle: t('pages.sidebar.withdraw'),
+                  title: t('pages.sidebar.available'),
+                  value: <span><small>{t('pages.sidebar.currency_symbol')}</small> 15.000,00</span>,
+                },
+                {
+                  action: () => {},
+                  actionTitle: t('pages.sidebar.anticipation'),
+                  title: t('pages.sidebar.waiting_funds'),
+                  value: <span><small>{t('pages.sidebar.currency_symbol')}</small> 7.000,00</span>,
+                },
+              ]}
+            />
           </SidebarSummary>
         }
         <SidebarLinks>

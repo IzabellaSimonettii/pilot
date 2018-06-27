@@ -475,6 +475,15 @@
       "success": "A transação foi reprocessada com sucesso",
       "title": "Reprocessar transação"
     },
+    "sidebar": {
+      "hide_balance": "Ocultar saldo",
+      "show_balance": "Mostrar saldo",
+      "withdraw": "Sacar",
+      "anticipation": "Antecipar",
+      "currency_symbol": "R$",
+      "available": "Disponível",
+      "waiting_funds": "A Receber"
+    },
     "withdraw": {
       "balance": "Saldo disponível",
       "cancel": "Cancelar",
