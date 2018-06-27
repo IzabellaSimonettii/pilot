@@ -6,3 +6,15 @@
   color: var(--color-light-greenish-100);
   padding: 0 4px;
 }
+
+.summaryContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary {
+  display: inherit;
+  flex-direction: inherit;
+  flex: 1;
+  align-items: flex-end;
+}

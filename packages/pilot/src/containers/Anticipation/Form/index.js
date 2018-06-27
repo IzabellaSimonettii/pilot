@@ -24,6 +24,7 @@ import formatAccountType from '../../../formatters/accountType'
 import formatAgencyAccount from '../../../formatters/agencyAccount'
 import formatCpfCnpj from '../../../formatters/cpfCnpj'
 import formatCurrency from '../../../formatters/currency'
+import style from './style.css'
 
 const renderInfo = (text, placement) => (
   <Tooltip
@@ -224,8 +225,8 @@ class AnticipationFormContainer extends Component {
             tablet={12}
             tv={4}
           >
-            <Card>
-              <CardContent>
+            <Card className={style.summaryContainer}>
+              <CardContent className={style.summary}>
                 <Grid>
                   <Row>
                     <Col
@@ -236,6 +237,7 @@ class AnticipationFormContainer extends Component {
                       tv={12}
                     >
                       <TotalDisplay
+                        align="end"
                         amount={approximateRequested}
                         color={colors.requested}
                         title={
@@ -260,6 +262,7 @@ class AnticipationFormContainer extends Component {
                       tv={12}
                     >
                       <TotalDisplay
+                        align="end"
                         amount={(cost + transferCost)}
                         color={colors.cost}
                         subtitle={
@@ -300,6 +303,7 @@ class AnticipationFormContainer extends Component {
                       tv={12}
                     >
                       <TotalDisplay
+                        align="end"
                         amount={amount}
                         color={colors.amount}
                         title={
