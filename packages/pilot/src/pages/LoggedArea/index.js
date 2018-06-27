@@ -16,9 +16,11 @@ import Header from './Header'
 
 import routes from './routes'
 
+const getBalance = pathOr(null, ['account', 'balance'])
 const getCompanyName = pathOr(null, ['account', 'company', 'name'])
 
 const mapStateToProps = state => ({
+  balance: getBalance(state),
   company: getCompanyName(state),
 })
 
@@ -29,6 +31,7 @@ const enhanced = compose(
 )
 
 const LoggedArea = ({
+  balance,
   company,
   t,
 }) => (
@@ -36,6 +39,7 @@ const LoggedArea = ({
     sidebar={
       <Sidebar
         company={company}
+        balance={balance}
         t={t}
       />
     }
@@ -55,6 +59,10 @@ const LoggedArea = ({
 )
 
 LoggedArea.propTypes = {
+  balance: PropTypes.shape({
+    available: PropTypes.number.isRequired,
+    waitingFunds: PropTypes.number.isRequired,
+  }).isRequired,
   company: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 }

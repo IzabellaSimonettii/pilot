@@ -1,9 +1,11 @@
 /* eslint-disable */
 import React from 'react'
 import PropTypes from 'prop-types'
+import { propOr } from 'ramda'
 
 import SidebarSections from '../components/SidebarSections'
 import SidebarSummary from '../components/SidebarSummary'
+import formatDecimalCurrency from '../formatters/decimalCurrency'
 
 import {
   Sidebar,
@@ -36,12 +38,17 @@ class SidebarContainer extends React.Component {
       showInfos,
     } = this.state
     const {
+      balance,
       links,
       logo: Logo,
       onLinkClick,
       t,
       company,
     } = this.props
+
+    const available = propOr(null, 'available', balance)
+    const waitingFunds = propOr(null, 'waitingFunds', balance)
+    
     return (
       <Sidebar collapsed={collapsed}>
         <SidebarHeader>
@@ -63,13 +70,13 @@ class SidebarContainer extends React.Component {
                   action: () => {},
                   actionTitle: t('pages.sidebar.withdraw'),
                   title: t('pages.sidebar.available'),
-                  value: <span><small>{t('pages.sidebar.currency_symbol')}</small> 15.000,00</span>,
+                  value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(available)}</span>,
                 },
                 {
                   action: () => {},
                   actionTitle: t('pages.sidebar.anticipation'),
                   title: t('pages.sidebar.waiting_funds'),
-                  value: <span><small>{t('pages.sidebar.currency_symbol')}</small> 7.000,00</span>,
+                  value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(waitingFunds)}</span>,
                 },
               ]}
             />
@@ -99,6 +106,10 @@ class SidebarContainer extends React.Component {
 }
 
 SidebarContainer.propTypes = {
+  balance: PropTypes.shape({
+    available: PropTypes.number.isRequired,
+    waitingFunds: PropTypes.number.isRequired,
+  }).isRequired,
   company: PropTypes.string.isRequired,
   links: PropTypes.arrayOf(PropTypes.shape({
     active: PropTypes.bool,

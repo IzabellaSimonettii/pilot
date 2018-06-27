@@ -21,6 +21,7 @@ const removeRouteParams = pipe(
 )
 
 const Sidebar = ({
+  balance,
   company,
   location: { pathname },
   history,
@@ -28,6 +29,7 @@ const Sidebar = ({
 }) => (
   <SidebarContainer
     logo={Logo}
+    balance={balance}
     company={company}
     links={values(routes)
       .filter(({ hidden }) => !hidden)
@@ -42,6 +44,10 @@ const Sidebar = ({
 )
 
 Sidebar.propTypes = {
+  balance: PropTypes.shape({
+    available: PropTypes.number.isRequired,
+    waitingFunds: PropTypes.number.isRequired,
+  }).isRequired,
   company: PropTypes.string.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,

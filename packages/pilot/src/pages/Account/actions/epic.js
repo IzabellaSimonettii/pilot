@@ -1,20 +1,25 @@
 import pagarme from 'pagarme'
-import { identity } from 'ramda'
+import { identity, pathOr } from 'ramda'
 import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/map'
 import { combineEpics } from 'redux-observable'
 import cockpit from 'cockpit'
+import env from '../../../environment'
 
 import {
-  receiveLogin,
+  ACCOUNT_RECEIVE,
+  COMPANY_RECEIVE,
+  failLogin,
+  LOGIN_RECEIVE,
+  LOGIN_REQUEST,
   receiveAccount,
   receiveCompany,
-  failLogin,
-  ACCOUNT_RECEIVE,
-  LOGIN_REQUEST,
-  LOGIN_RECEIVE,
+  receiveLogin,
+  receiveRecipientBalance,
 } from '.'
+
+const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 
 const loginEpic = action$ =>
   action$
@@ -74,4 +79,25 @@ const companyEpic = (action$, store) =>
       })
     })
 
-export default combineEpics(loginEpic, accountEpic, companyEpic)
+const recipientBalanceEpic = (action$, store) =>
+  action$
+    .ofType(COMPANY_RECEIVE)
+    .mergeMap(({ error, payload }) => {
+      const state = store.getState()
+      const recipientId = getRecipientId(state)
+      const { account: { client } } = state
+
+      if (error) {
+        return Promise.resolve(payload)
+      }
+
+      return client.recipient.balance(recipientId).catch(identity)
+    })
+    .map(receiveRecipientBalance)
+    .do(({ error, payload }) => (
+      error
+        ? console.log(error) // eslint-disable-line no-console
+        : console.log(payload) // eslint-disable-line no-console
+    ))
+
+export default combineEpics(loginEpic, accountEpic, companyEpic, recipientBalanceEpic)
