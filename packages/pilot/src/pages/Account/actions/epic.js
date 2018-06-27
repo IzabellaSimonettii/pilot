@@ -19,6 +19,8 @@ import {
   receiveRecipientBalance,
 } from '.'
 
+import { WITHDRAW_RECEIVE } from '../../Withdraw/actions'
+
 const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 
 const loginEpic = action$ =>
@@ -81,7 +83,7 @@ const companyEpic = (action$, store) =>
 
 const recipientBalanceEpic = (action$, store) =>
   action$
-    .ofType(COMPANY_RECEIVE)
+    .ofType(COMPANY_RECEIVE, WITHDRAW_RECEIVE)
     .mergeMap(({ error, payload }) => {
       const state = store.getState()
       const recipientId = getRecipientId(state)
