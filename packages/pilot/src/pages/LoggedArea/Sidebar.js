@@ -23,6 +23,7 @@ const removeRouteParams = pipe(
 const Sidebar = ({
   balance,
   company,
+  recipientId,
   location: { pathname },
   history,
   t,
@@ -39,6 +40,8 @@ const Sidebar = ({
       }))
     }
     onLinkClick={history.push}
+    onWithdraw={() => history.push(`/withdraw/${recipientId}`)}
+    onAnticipate={() => history.push(`/anticipation/${recipientId}`)}
     t={t}
   />
 )
@@ -49,6 +52,7 @@ Sidebar.propTypes = {
     waitingFunds: PropTypes.number.isRequired,
   }).isRequired,
   company: PropTypes.string.isRequired,
+  recipientId: PropTypes.string.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,

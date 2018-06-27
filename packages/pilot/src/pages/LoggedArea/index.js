@@ -10,18 +10,21 @@ import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
 import { compose, pathOr } from 'ramda'
 import { Layout } from 'former-kit'
+import env from '../../environment'
 
 import Sidebar from './Sidebar'
 import Header from './Header'
 
 import routes from './routes'
 
+const getRecipientId = pathOr(null, ['account', 'company', 'default_recipient_id', env])
 const getBalance = pathOr(null, ['account', 'balance'])
 const getCompanyName = pathOr(null, ['account', 'company', 'name'])
 
 const mapStateToProps = state => ({
   balance: getBalance(state),
   company: getCompanyName(state),
+  recipientId: getRecipientId(state),
 })
 
 const enhanced = compose(
@@ -33,6 +36,7 @@ const enhanced = compose(
 const LoggedArea = ({
   balance,
   company,
+  recipientId,
   t,
 }) => (
   <Layout
@@ -40,6 +44,7 @@ const LoggedArea = ({
       <Sidebar
         company={company}
         balance={balance}
+        recipientId={recipientId}
         t={t}
       />
     }
@@ -64,6 +69,7 @@ LoggedArea.propTypes = {
     waitingFunds: PropTypes.number.isRequired,
   }).isRequired,
   company: PropTypes.string.isRequired,
+  recipientId: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 }
 

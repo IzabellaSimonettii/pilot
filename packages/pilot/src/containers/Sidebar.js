@@ -43,6 +43,8 @@ class SidebarContainer extends React.Component {
       logo: Logo,
       onLinkClick,
       t,
+      onWithdraw,
+      onAnticipate,
       company,
     } = this.props
 
@@ -67,13 +69,13 @@ class SidebarContainer extends React.Component {
             <SidebarSections
               sections={[
                 {
-                  action: () => {},
+                  action: onWithdraw,
                   actionTitle: t('pages.sidebar.withdraw'),
                   title: t('pages.sidebar.available'),
                   value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(available)}</span>,
                 },
                 {
-                  action: () => {},
+                  action: onAnticipate,
                   actionTitle: t('pages.sidebar.anticipation'),
                   title: t('pages.sidebar.waiting_funds'),
                   value: <span><small>{t('pages.sidebar.currency_symbol')}</small> {formatDecimalCurrency(waitingFunds)}</span>,
