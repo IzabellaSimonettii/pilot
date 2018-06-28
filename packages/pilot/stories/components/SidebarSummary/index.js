@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { action } from '@storybook/addon-actions'
+
 import Section from '../../Section'
 import SidebarSections from '../../../src/components/SidebarSections'
 import SidebarSummary from '../../../src/components/SidebarSummary'
@@ -7,13 +9,13 @@ import SidebarSummary from '../../../src/components/SidebarSummary'
 const sections = {
   data: [
     {
-      action: () => {},
+      action: action('clicked'),
       actionTitle: 'Sacar',
       title: 'Disponível',
       value: <span><small>R$</small> 15.000,00</span>,
     },
     {
-      action: () => {},
+      action: action('clicked'),
       actionTitle: 'Antecipar',
       title: 'A receber',
       value: <span><small>R$</small> 70.000,00</span>,
@@ -30,23 +32,27 @@ class SidebarSummaryExample extends React.Component {
 
     this.state = {
       collapsed: false,
-      showInfos: false,
+      summaryCollapsed: true,
     }
   }
 
   render () {
     const {
       collapsed,
-      showInfos,
+      summaryCollapsed,
     } = this.state
 
     return (
       <Section>
         {!collapsed &&
           <SidebarSummary
-            active={showInfos}
-            onClick={() => this.setState({ showInfos: !showInfos })}
-            subtitle={showInfos ? `${sections.hideMsg}` : `${sections.showMsg}`}
+            collapsed={summaryCollapsed}
+            onClick={() => this.setState({ summaryCollapsed: !summaryCollapsed })}
+            subtitle={
+              summaryCollapsed
+                ? `${sections.showMsg}`
+                : `${sections.hideMsg}`
+            }
             title={sections.title}
           >
             <SidebarSections sections={sections.data} />
